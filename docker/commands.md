@@ -73,7 +73,7 @@ docker run -e <key>=<value> <image>
 ```
 docker inspect <container-name>
 ```
-Under the `Config/Env` section, you'll find the `key:value`.
+Under the path `Config/Env` section, you'll find the `key:value`.
 
 ## Docker Image
 
@@ -115,3 +115,71 @@ You can check the layered-achitecture history of the image created by running co
 docker history <image-name>
 ```
 Docker will cache the progress of build for the image.
+
+## Docker CMD
+
+### Change value
+
+Let's assume your docker-file has the following line (at the end) -
+```
+// Other instructions
+
+CMD sleep 5
+(OR)
+CMD ["sleep","5"]
+```
+To change this value (for example 10) at run-time, we've two ways.
+
+#### Option 1
+Override the instruction.
+```
+docker run <image-name> sleep 10
+```
+#### Option 2 (Recommended)
+You can use `ENTRYPOINT` command
+```
+// Other instructions
+
+ENTRYPOINT ["sleep"]
+```
+and run the following command -
+```
+docker run <image-name> 10
+```
+**NOTE** : Using this approach means an argument is mandatory while running the image, otherwise it will result in failure.
+
+#### Option 3 (Having argument as well as default value)
+```
+// Other instructions
+
+ENTRYPOINT ["sleep"]
+CMD ["5"]
+```
+
+### Override ENTRYPOINT at runtime
+```
+docker run --entrypoint <new-instruction> <image-name> <value>
+```
+
+## Create Network
+
+### List all networks
+```
+docker netowrk ls
+```
+
+### Check network settings for running container
+```
+docker inspect <container-name>
+```
+Check path `NetworkSettings/Networks/bridge` for details.
+
+### Bridge (Default)
+Let's attempt to create a bridge (other than the default) on `182.10.0.0` -
+```
+docker network create \
+   --driver bridge \
+   --subnet 182.10.0.0/16
+   custom-network-name
+```
+
