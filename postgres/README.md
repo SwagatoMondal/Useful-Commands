@@ -6,6 +6,12 @@ psql postgres
 ```
 NOTE : Depending on your computer settings `sudo` might be required.
 
+In case you wanna check where is PSQL installed, use this command
+```
+username$ which psql
+/usr/local/bin/psql
+```
+
 # Databases
 ## List all Databases
 
