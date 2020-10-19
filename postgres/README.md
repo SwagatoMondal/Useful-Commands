@@ -13,6 +13,10 @@ NOTE : Depending on your computer settings `sudo` might be required.
 ```
 \c <db-name>
 ```
+## Connect to a remote host
+```
+psql -h <host> -p <port> -d <db_name> -U <user>
+```
 
 ## Tables
 ### List down all tables in a database
